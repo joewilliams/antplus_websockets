@@ -22,11 +22,13 @@ handle_call(get_data, _From, #state{port = Port} = State) ->
     receive
         {Port, {data, Data}} ->
             %io:format("data: ~p~n", [Data]),
-            {Float, _} = string:to_float(Data),
-            JSON = jiffy:encode({[{data, {[{hrm, Float}]}}]}),
+            {Int, _} = string:to_integer(Data),
+            JSON = jiffy:encode({[{data, {[{hrm, Int}]}}]}),
 	    {reply, JSON, State};
         Other ->
             io:format("got something unexpected: ~p~n", [Other])
+    after 2000 ->
+	{reply, jiffy:encode({[{data, {[{hrm, 0}]}}]}), State}
     end.
 
 handle_cast(_Msg, State) ->
