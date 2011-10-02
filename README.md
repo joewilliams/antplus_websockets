@@ -19,9 +19,9 @@ This code uses the 'hrm' executable in https://github.com/joewilliams/antplus_hr
 
 Now hit localhost:8080 in a browser you should see output like the following.
 
-	{"data":{"hrm":53.94210000000000349}}
-	{"data":{"hrm":55.803800000000002512}}
-	{"data":{"hrm":57.100400000000000489}}
+	{"data":{"hrm":53}}
+	{"data":{"hrm":55}}
+	{"data":{"hrm":57}}
 
 This has been tested on Ubuntu 10.04 using the following two devices:
 
