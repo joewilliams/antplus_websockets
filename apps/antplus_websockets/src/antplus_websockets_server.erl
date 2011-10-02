@@ -33,7 +33,9 @@ handle_cast(_Msg, State) ->
     {noreply, State}.
 
 handle_info({'EXIT', Port, Reason}, #state{port = Port} = State) ->
-    {stop, {port_terminated, Reason}, State}.
+    {stop, {port_terminated, Reason}, State};
+handle_info(_Info, State) ->
+    {noreply, State}.
 
 terminate({port_terminated, _Reason}, _State) ->
     ok;

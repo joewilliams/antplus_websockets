@@ -16,7 +16,7 @@ init(Options) ->
 
     Serial = proplists:get_value(serial, Options, "/dev/ttyUSB0"),
     ServerSpec = {antplus_websockets_server,
-                   {antplus_websockets_server, start_link, Serial},
+                   {antplus_websockets_server, start_link, [Serial]},
                    permanent, 60000, worker, [antplus_websockets_server]
                   },
 
