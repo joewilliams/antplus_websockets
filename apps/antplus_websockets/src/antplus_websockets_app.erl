@@ -24,6 +24,5 @@ start(_Type, _StartArgs) ->
                                         {ws_loop, WSLoop},
                                         {ws_autoexit, false}
                                        ]).
-
 stop(_State) ->
     ok.

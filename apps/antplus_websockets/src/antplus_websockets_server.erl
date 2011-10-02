@@ -25,7 +25,7 @@ handle_call(get_data, _From, #state{port = Port} = State) ->
             %io:format("data: ~p~n", [Data]),
             {Int, _} = string:to_integer(Data),
             JSON = jiffy:encode({[{data, {[{hrm, Int}]}}]}),
-            folsom_metric:notify({<<"hrm">>, Int}),
+            folsom_metrics:notify({<<"hrm">>, Int}),
             {reply, JSON, State};
         Other ->
             io:format("got something unexpected: ~p~n", [Other])
