@@ -23,7 +23,10 @@ Now hit localhost:8080 in a browser you should see output like the following.
 	{"data":{"hrm":55.803800000000002512}}
 	{"data":{"hrm":57.100400000000000489}}
 
-This has been tested on Ubuntu 10.04.
+This has been tested on Ubuntu 10.04 using the following two devices:
+
+http://www.amazon.com/Garmin-010-10999-00-USB-Ant-Stick/dp/B000UO9KSY/
+http://www.amazon.com/Garmin-Premium-Heart-Monitor-Strap/dp/B0029M3NSS/
 
 ### Misc
 
