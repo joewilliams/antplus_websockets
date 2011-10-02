@@ -1,0 +1,12 @@
+{application, antplus_websockets,
+ [
+  {description, ""},
+  {vsn, "0.1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { antplus_websockets_app, []}},
+  {env, []}
+ ]}.
