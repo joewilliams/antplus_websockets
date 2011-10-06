@@ -11,6 +11,7 @@ start_link(SerialDevice) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, SerialDevice, []).
 
 init(SerialDevice) ->
+    folsom_metrics:new_histogram(<<"hrm">>),
     process_flag(trap_exit,true),
     Bin = filename:join([filename:dirname(code:which(?MODULE)),"..", "priv", "hrm"]),
     Cmd = lists:flatten(io_lib:format("~s -g -t 5 -f ~s", [Bin, SerialDevice])),
@@ -24,7 +25,8 @@ handle_call(get_data, _From, #state{port = Port} = State) ->
             %io:format("data: ~p~n", [Data]),
             {Int, _} = string:to_integer(Data),
             JSON = jiffy:encode({[{data, {[{hrm, Int}]}}]}),
-	    {reply, JSON, State};
+            folsom_metric:notify({<<"hrm">>, Int}),
+            {reply, JSON, State};
         Other ->
             io:format("got something unexpected: ~p~n", [Other])
     after 2000 ->
