@@ -1,3 +1,4 @@
 apps/*/ebin
 deps
 rel/antplus_websockets
+*#

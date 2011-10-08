@@ -22,7 +22,7 @@ init(Options) ->
 
     Folsom = {folsom_webmachine,
               {folsom_webmachine_sup, start_link, []},
-              permanent, 60000, worker, [folsom]},
+              transient, infinity, supervisor, [folsom_webmachine_sup]},
 
     {ok, {{one_for_all, 5, 30}, [MisultinSpec, ServerSpec, Folsom]}}.
 
