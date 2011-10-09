@@ -11,7 +11,8 @@ start_link(SerialDevice) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, SerialDevice, []).
 
 init(SerialDevice) ->
-    folsom_metrics:new_histogram(<<"hrm">>),
+    folsom_metrics:new_histogram(<<"hrm_hist">>),
+    folsom_metrics:new_meter(<<"hrm_meter">>),
 
     process_flag(trap_exit,true),
     Bin = filename:join([filename:dirname(code:which(?MODULE)),"..", "priv", "hrm"]),
@@ -22,14 +23,15 @@ init(SerialDevice) ->
 
 handle_call(get_data, _From, #state{port = Port} = State) ->
     receive
-	{Port, {data, "0"}} ->
-	    {reply, jiffy:encode({[{data, {[{hrm, 0}]}}]}), State};
+        {Port, {data, "0"}} ->
+            {reply, jiffy:encode({[{data, {[{hrm, 0}]}}]}), State};
         {Port, {data, Data}} ->
             %io:format("data: ~p~n", [Data]),
             {Int, _} = string:to_integer(Data),
             JSON = jiffy:encode({[{data, {[{hrm, Int}]}}]}),
-            
-            folsom_metrics:notify({<<"hrm">>, Int}),
+
+            folsom_metrics:notify({<<"hrm_hist">>, Int}),
+            folsom_metrics:notify({<<"hrm_meter">>, Int}),
 
             {reply, JSON, State};
         Other ->
