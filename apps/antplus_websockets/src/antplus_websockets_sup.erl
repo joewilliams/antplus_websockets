@@ -20,7 +20,10 @@ init(Options) ->
                    permanent, 60000, worker, [antplus_websockets_server]
                   },
 
-    Folsom = {folsom_webmachine, {folsom_webmachine_sup, start_link, []}, permanent, infinity, supervisor, [folsom_webmachine_sup]}, 
+    Folsom = {folsom_webmachine,
+              {folsom_webmachine_sup, start_link, []},
+              permanent, infinity, supervisor, [folsom_webmachine_sup]
+             },
 
     {ok, {{one_for_all, 5, 30}, [MisultinSpec, ServerSpec, Folsom]}}.
 
