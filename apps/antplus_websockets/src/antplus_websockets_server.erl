@@ -13,6 +13,7 @@ start_link(SerialDevice) ->
 init(SerialDevice) ->
     folsom_metrics:new_histogram(<<"hrm_hist">>),
     folsom_metrics:new_meter(<<"hrm_meter">>),
+    folsom_metrics:new_counter(<<"hrm_counter">>),
 
     process_flag(trap_exit,true),
     Bin = filename:join([filename:dirname(code:which(?MODULE)),"..", "priv", "hrm"]),
@@ -32,6 +33,7 @@ handle_call(get_data, _From, #state{port = Port} = State) ->
 
             folsom_metrics:notify({<<"hrm_hist">>, Int}),
             folsom_metrics:notify({<<"hrm_meter">>, Int}),
+            folsom_metrics:notify({<<"hrm_counter">>, {inc, 1}}),
 
             {reply, JSON, State};
         Other ->
